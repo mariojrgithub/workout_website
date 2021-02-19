@@ -32,6 +32,7 @@ login_manager.login_view = 'login'
 
 class Users(db.Document, UserMixin):
     name = db.StringField(unique=True)
+    email = db.EmailField(unique=True)
     password = db.StringField()
 
     def to_json(self):
@@ -46,7 +47,7 @@ class Cardio(db.Document, UserMixin):
     duration = db.IntField()
     intensity = db.IntField()
     date = db.StringField()
-    
+
     def to_json(self):
         return {"user": self.user,
                 "extype": self.extype,
@@ -55,6 +56,7 @@ class Cardio(db.Document, UserMixin):
                 "intensity": self.intensity,
                 "date": self.date,
                 }
+
 
 class Resistance(db.Document, UserMixin):
     user = db.StringField()
@@ -74,7 +76,7 @@ class Resistance(db.Document, UserMixin):
                 "sets": self.sets,
                 "repetitions": self.repetitions,
                 "rest": self.rest,
-                "date": self.date,}
+                "date": self.date, }
 
 
 class News:
@@ -135,12 +137,15 @@ def news():
     news_list = None
 
     if request.method == "POST":
-
+    
         query = request.form.get("search")
 
         page = request.form.get("page")
 
-        news_list = get_news(query, page)
+        try:
+            news_list = get_news(query, page)
+        except:
+            news_list = get_news('fitness', 1)
 
         return render_template('news.html', news_list=news_list)
 
@@ -157,8 +162,8 @@ def logout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    name = form.name.data
-    user = Users.objects(name=name).first()
+    email = form.email.data
+    user = Users.objects(email=email).first()
 
     if user:
         if check_password_hash(user.password, form.password.data):
@@ -166,8 +171,6 @@ def login():
             flash("Login was successfull!")
 
             return redirect(url_for('index'))
-
-        flash("Invalid Credentials")
 
     return render_template('login.html', form=form)
 
@@ -177,9 +180,16 @@ def register():
 
     form = CreateUserForm()
 
-    if form.validate_on_submit():
+    password = form.password.data
+    val_pass = form.valpassword.data
+
+    if password != val_pass:
+        flash("Passwords do not match, please try again!")
+
+    if password == val_pass and form.validate_on_submit():
 
         user = Users(name=form.name.data,
+                     email=form.email.data,
                      password=generate_password_hash(form.password.data, method='sha256'))
 
         try:
@@ -200,15 +210,16 @@ def register():
 def AddWorkout():
 
     if request.method == "POST":
-        
+
         extype = request.form.getlist("type")[0]
-        
+
         if extype == 'cardio':
             return redirect(url_for('add_cardio'))
         elif extype == 'resistance':
             return redirect(url_for('add_resistance'))
 
     return render_template('add_workout.html')
+
 
 @app.route('/add-workout/cardio', methods=['GET', 'POST'])
 @login_required
@@ -233,6 +244,7 @@ def add_cardio():
 
     return render_template('add_cardio.html', form=form)
 
+
 @app.route('/add-workout/resistance', methods=['GET', 'POST'])
 @login_required
 def add_resistance():
@@ -241,14 +253,14 @@ def add_resistance():
 
     if form.validate_on_submit():
         resistance = Resistance(user=user,
-                        extype='resistance',
-                        name=form.name.data,
-                        weight=form.weight.data,
-                        sets=form.sets.data,
-                        repetitions=form.repetitions.data,
-                        rest=form.rest.data,
-                        date=str(form.date.data)
-                        )
+                                extype='resistance',
+                                name=form.name.data,
+                                weight=form.weight.data,
+                                sets=form.sets.data,
+                                repetitions=form.repetitions.data,
+                                rest=form.rest.data,
+                                date=str(form.date.data)
+                                )
 
         resistance.save()
 
@@ -272,7 +284,7 @@ def EditCardio(id):
         exercise.name = form.name.data
         exercise.duration = form.duration.data
         exercise.intensity = form.intensity.data
-        exercise.date = form.date.data
+        exercise.date = str(form.date.data)
 
         exercise.save()
         flash("Workout was edited successfully")
@@ -282,12 +294,13 @@ def EditCardio(id):
     form.name.data = exercise.name
     form.duration.data = exercise.duration
     form.intensity.data = exercise.intensity
-    form.date.data = exercise.date
+    form.date.data = str(exercise.date)
 
     return render_template('edit_cardio.html', form=form)
 
+
 @app.route('/edit-resistance/<id>', methods=['GET', 'POST'])
-@login_required   
+@login_required
 def EditResistance(id):
 
     exercise = Resistance.objects(id=str(id)).first()
@@ -301,7 +314,7 @@ def EditResistance(id):
         exercise.sets = form.sets.data
         exercise.repetitions = form.repetitions.data
         exercise.rest = form.rest.data
-        exercise.date = form.date.data
+        exercise.date = str(form.date.data)
 
         exercise.save()
         flash("Workout was edited successfully")
@@ -313,7 +326,7 @@ def EditResistance(id):
     form.sets.data = exercise.sets
     form.repetitions.data = exercise.repetitions
     form.rest.data = exercise.rest
-    form.date.data = exercise.date
+    form.date.data = str(exercise.date)
 
     return render_template('edit_resistance.html', form=form)
 
@@ -322,22 +335,53 @@ def EditResistance(id):
 @login_required
 def DeleteWorkout(id):
 
-    exercise = Resistance.objects(id=str(id)).first()
-    exercise.delete()
+    try:
+        exercise = Resistance.objects(id=str(id)).first()
+        exercise.delete()
+    except:
+        exercise = Cardio.objects(id=str(id)).first()
+        exercise.delete()
 
     flash('Exercise was successfully deleted!')
 
     return redirect(url_for('history'))
 
 
-@app.route('/history', methods=['GET'])
+@app.route('/history', methods=['GET', 'POST'])
 @login_required
 def history():
     user = current_user.name
 
+    if request.method == "POST":
+
+        extype = request.form.getlist("type")[0]
+
+        if extype == 'cardio':
+            return redirect(url_for('cardio_history'))
+        elif extype == 'resistance':
+            return redirect(url_for('resistance_history'))
+
+    return render_template('history.html', user=user)
+
+
+@app.route('/history/cardio', methods=['GET', 'POST'])
+@login_required
+def cardio_history():
+    user = current_user.name
+
+    exercises = Cardio.objects(user=user)
+
+    return render_template('cardio_history.html', exercises=exercises, user=user)
+
+
+@app.route('/history/resistance', methods=['GET', 'POST'])
+@login_required
+def resistance_history():
+    user = current_user.name
+
     exercises = Resistance.objects(user=user)
 
-    return render_template('history.html', exercises=exercises, user=user)
+    return render_template('resistance_history.html', exercises=exercises, user=user)
 
 
 if __name__ == "__main__":

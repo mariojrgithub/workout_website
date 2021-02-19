@@ -6,14 +6,15 @@
 {% block body %}
 
 <div class="container" style="text-align: center;">
-
-  <h1>Your Fitness News Feed</h1>
-
+  <br>
+  <h3>Your Fitness News Feed</h3>
+  <br>
   <div>
     <form action="{{ url_for('news') }}" method="POST">
       Topic: <input type="text" name="search" id="search"><br>
-      Page: <input style="width: 5em;" type="number" name="page" id="page">
-      <button class="btn btn-primary" type="submit">Search</button>
+      Page: <input style="width: 5em; margin-top: 5px;" type="number" name="page" id="page">
+      <br>
+      <button style="margin: 5px;" class="btn btn-primary" type="submit">Search</button>
     </form>
   </div>
   <br>
@@ -27,6 +28,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ news.title }}</h5>
           <p class="card-text">{{ news.date }}</p>
+         
           <a href="{{ news.url }}" class="btn btn-primary" target="_blank">Visit {{ news.provider }}</a>
         </div>
       </div>

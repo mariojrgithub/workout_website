@@ -6,7 +6,8 @@
 {% block body %}
 
 <div class="container">
-    <h2>Add a Workout</h2>
+    <br>
+    <h3>Edit Resistance</h3>
     {% for field, errors in form.errors.items() %}
     {{ ', '.join(errors) }}
     {% endfor %}
@@ -33,6 +34,11 @@
             {{ form.rest.label }}
             {{ form.rest(class="form-control") }}
         </div>
+        <div class="form-group">
+            {{ form.date.label }}
+            {{ form.date(class="form-control") }}
+        </div>
+
         <div class="form-group">
             {{ form.submit(class="btn btn-primary")}}
         </div>

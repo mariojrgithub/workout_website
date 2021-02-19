@@ -1,14 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, \
+from wtforms import StringField, PasswordField, \
     SubmitField
 from wtforms.validators import ValidationError, DataRequired, \
-    Email, EqualTo, Length
+    Email, Length
 
 
 class LoginForm(FlaskForm):
-    name = StringField(label=('Username'),
-                       validators=[DataRequired(),
-                                   Length(max=64)])
+    email = StringField(label=('Email'),
+                       validators=[DataRequired(), Email(),
+                                   Length(max=120)])
 
     password = PasswordField(label=('Password'),
                              validators=[DataRequired(),

@@ -5,40 +5,18 @@
 
 {% block body %}
 
-<div class="container" id="exercises" style="text-align: center;">
-  <h2>{{ user }} Workout History</h2>
-  <br>
-  <table class="table table-dark">
-    <thead class="thead-light">
+<div class="container">
+    <br>
+    <h3>Workout History</h3>
+    <br>
 
-      <tr>
-
-        <th scope="col">Name</th>
-        <th scope="col">Sets</th>
-        <th scope="col">Reps</th>
-        <th scope="col">Date</th>
-
-      </tr>
-
-    </thead>
-    <tbody>
-      {% for ex in exercises %}
-      <tr>
-        <td>{{ ex.name }}</td>
-        <td>{{ ex.sets }}</td>
-        <td>{{ ex.repetitions }}</td>
-        <td>{{ ex.date }}</td>
-        <td style="width: 10em;"><a href="{{ url_for('EditResistance', id=ex.id) }}"><button
-              class="btn btn-success navbar-btn">Edit</button> </a>
-          <a href="{{ url_for('DeleteWorkout', id=ex.id) }}"><button class="btn btn-danger navbar-btn"
-              onclick="return confirm('Are you sure you wish to delete?');">Delete</button> </a>
-        </td>
-      </tr>
-      {% endfor %}
-
-    </tbody>
-  </table>
-
+    <form action="{{ url_for('history') }}" method="POST">
+        <input type="radio" id="cardio" name="type" value="cardio">
+        <label for="cardio">Cardio</label><br>
+        <input type="radio" id="resistance" name="type" value="resistance">
+        <label for="resistance">Resistance</label><br>
+        <button class="btn btn-primary" type="submit">Select</button>
+    </form>
 </div>
 
 {% endblock %}

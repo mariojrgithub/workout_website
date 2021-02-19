@@ -6,18 +6,17 @@
 {% block body %}
 
 <div class="container">
-    <h2>Add a Workout</h2>
     <br>
-   
-        <form action="{{ url_for('AddWorkout') }}" method="POST">
-            <input type="radio" id="cardio" name="type" value="cardio">
-            <label for="cardio">Cardio</label><br>
-            <input type="radio" id="resistance" name="type" value="resistance">
-            <label for="resistance">Resistance</label><br>
-            <button class="btn btn-primary" type="submit">Select</button>
-        </form>
-      </div>
-      
-      {% endblock %}
+    <h3>Add a Workout</h3>
+    <br>
 
-                     
+    <form action="{{ url_for('AddWorkout') }}" method="POST">
+        <input type="radio" id="cardio" name="type" value="cardio">
+        <label for="cardio">Cardio</label><br>
+        <input type="radio" id="resistance" name="type" value="resistance">
+        <label for="resistance">Resistance</label><br>
+        <button class="btn btn-primary" type="submit">Select</button>
+    </form>
+</div>
+
+{% endblock %}
