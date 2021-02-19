@@ -6,12 +6,10 @@
 {% block body %}
 
 <div class="container">
-    <h2>Login</h2>
+    <h2>Add a Workout</h2>
     {% for field, errors in form.errors.items() %}
     {{ ', '.join(errors) }}
     {% endfor %}
-
-
     <form class="form-horizontal" method="POST" action="">
         {{ form.csrf_token() }}
         <div class="form-group">
@@ -20,10 +18,21 @@
         </div>
 
         <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password(class="form-control") }}
+            {{ form.weight.label }}
+            {{ form.weight(class="form-control") }}
         </div>
-
+        <div class="form-group">
+            {{ form.sets.label }}
+            {{ form.sets(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.repetitions.label }}
+            {{ form.repetitions(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.rest.label }}
+            {{ form.rest(class="form-control") }}
+        </div>
         <div class="form-group">
             {{ form.submit(class="btn btn-primary")}}
         </div>
