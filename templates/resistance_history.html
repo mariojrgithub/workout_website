@@ -15,7 +15,7 @@
       <tr>
 
         <th scope="col">Name</th>
-        <th scope="col">Weight</th>
+        <th scope="col">Weight (lbs)</th>
         <th scope="col">Sets</th>
         <th scope="col">Reps</th>
         <th scope="col">Date</th>
@@ -29,7 +29,7 @@
         <td>{{ ex.name }}</td>
         <td>{{ ex.weight }}</td>
         <td>{{ ex.sets }}</td>
-        <td>{{ ex.reps }}</td>
+        <td>{{ ex.repetitions }}</td>
         <td>{{ ex.date }}</td>
         <td style="width: 10em;"><a href="{{ url_for('EditResistance', id=ex.id) }}"><button
               class="btn btn-success navbar-btn">Edit</button> </a>

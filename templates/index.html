@@ -7,13 +7,24 @@
 
 <div class="container" style="text-align: center;">
     <br>
-    <h1>Welcome to ProTrainingLA</h1>
+    <h3>Welcome to ProTrainingLA</h3>
     <br>
-    <p>
+    <h4>Hello {{name}}</h4>
+    <br>
 
-    <h2>Hello {{name}}</h2>
+<div class="card" style="width: 18rem; margin: auto; border: 1px solid gray; border-radius: 50px; background-color: #96BBDE; color: #FFF;">
+    
+    <img id="icon" class="card-img" src="{{ weather.icon }}" alt="Card image">
 
-    </p>
+    <div class="card-img-overlay">
+        <h5 class="card-title">{{ weather.name }}, {{weather.state}} Weather</h5>
+        <p class="card-text">As of {{ weather.time }} on {{ weather.date }}</p>
+        <h1 class="card-text">{{ weather.temp }}°</h1>
+        <p class="card-text">Feels Like {{ weather.windchill }}°</p>
+        <h2 class="card-text">{{ weather.condition }}</h2>
+        
+    </div>
+</div>
 
 
 </div>

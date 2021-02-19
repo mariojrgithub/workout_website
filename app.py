@@ -87,6 +87,55 @@ class News:
         self.url = url
         self.date = date
 
+class Weather:
+  def __init__(self, name, state, date, time, 
+               icon, condition, temp, windchill, 
+               humidity, windspeed, winddir):
+    self.name = name
+    self.state = state
+    self.date = date
+    self.time = time
+    self.icon = icon
+    self.condition = condition
+    self.temp = temp
+    self.windchill = windchill
+    self.humidity = humidity
+    self.windspeed = windspeed
+    self.winddir = winddir
+
+def get_weather(zip):
+  
+  url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
+
+  querystring = {"q": str(zip),"days":"3"}
+
+  headers = {
+      'x-rapidapi-key': RAPID_API_KEY,
+      'x-rapidapi-host': "weatherapi-com.p.rapidapi.com"
+      }
+
+  response = requests.request("GET", url, headers=headers, params=querystring)
+
+  name = response.json()['location']['name']
+  state = response.json()['location']['region']
+  date = response.json()['location']['localtime'].split()[0]
+  time = response.json()['location']['localtime'].split()[1]
+  icon = response.json()['current']['condition']['icon']
+  condition = response.json()['current']['condition']['text']
+  temp = response.json()['current']['temp_f']
+  windchill = response.json()['current']['feelslike_f']
+  humidity = response.json()['current']['humidity']
+  windspeed = response.json()['current']['wind_mph']
+  winddir = response.json()['current']['wind_dir']
+
+  if int(time.split(':')[0]) > 12:
+      time = time.split(':')[0].replace(time.split(':')[0], str(int(time.split(':')[0]) - 12)) + ':' + time.split(':')[1]
+  
+
+  return Weather(name, state, date, time, 
+               icon, condition, temp, windchill, 
+               humidity, windspeed, winddir)
+
 
 def get_news(query, page):
 
@@ -128,7 +177,9 @@ def load_user(user_id):
 @login_required
 def index():
     name = current_user.name
-    return render_template('index.html', name=name)
+    weather = get_weather(46312)
+
+    return render_template('index.html', name=name, weather=weather)
 
 
 @app.route('/news', methods=['GET', 'POST'])
@@ -169,8 +220,11 @@ def login():
         if check_password_hash(user.password, form.password.data):
             login_user(user)
             flash("Login was successfull!")
-
             return redirect(url_for('index'))
+        else:
+            flash("Invalid Credentials!")
+    else:
+            flash("Invalid Credentials!")
 
     return render_template('login.html', form=form)
 
@@ -211,12 +265,14 @@ def AddWorkout():
 
     if request.method == "POST":
 
-        extype = request.form.getlist("type")[0]
-
-        if extype == 'cardio':
-            return redirect(url_for('add_cardio'))
-        elif extype == 'resistance':
-            return redirect(url_for('add_resistance'))
+        try:
+            extype = request.form.getlist("type")[0]
+            if extype == 'cardio':
+                return redirect(url_for('add_cardio'))
+            elif extype == 'resistance':
+                return redirect(url_for('add_resistance'))
+        except:
+            flash("Please make a selection.")
 
     return render_template('add_workout.html')
 
@@ -354,12 +410,15 @@ def history():
 
     if request.method == "POST":
 
-        extype = request.form.getlist("type")[0]
-
-        if extype == 'cardio':
-            return redirect(url_for('cardio_history'))
-        elif extype == 'resistance':
-            return redirect(url_for('resistance_history'))
+        try:
+            extype = request.form.getlist("type")[0]
+        
+            if extype == 'cardio':
+                return redirect(url_for('cardio_history'))
+            elif extype == 'resistance':
+                return redirect(url_for('resistance_history'))
+        except:
+            flash("Please make a selection.")
 
     return render_template('history.html', user=user)
 
