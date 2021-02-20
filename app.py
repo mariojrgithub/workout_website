@@ -186,6 +186,9 @@ def index():
 @app.route('/news', methods=['GET', 'POST'])
 @login_required
 def news():
+
+    name = current_user.name
+
     news_list = None
 
     if request.method == "POST":
@@ -199,9 +202,9 @@ def news():
         except:
             news_list = get_news('fitness', page)
 
-        return render_template('news.html', news_list=news_list)
+        return render_template('news.html', news_list=news_list, name=name)
 
-    return render_template('news.html', news_list=news_list)
+    return render_template('news.html', news_list=news_list, name=name)
 
 
 @app.route('/logout')
@@ -215,15 +218,21 @@ def logout():
 def login():
     form = LoginForm()
     email = form.email.data
-    user = Users.objects(email=email).first()
-    
-    if user:
-        if check_password_hash(user.password, form.password.data):
-            login_user(user)
-            flash("Login was successfull!")
-            return redirect(url_for('index'))
-        else:
-            flash("Invalid credentials.")
+
+    try: 
+        if email:
+            user = Users.objects(email=email).first()
+ 
+            print(email == user.email)
+
+            if check_password_hash(user.password, form.password.data):
+                login_user(user)
+                flash("Login was successfull!")
+                return redirect(url_for('index'))
+            else:
+                flash("Invalid credentials.")
+    except:
+        flash("Invalid credentials.")
 
     return render_template('login.html', form=form)
 
@@ -262,6 +271,8 @@ def register():
 @login_required
 def AddWorkout():
 
+    name = current_user.name
+
     if request.method == "POST":
 
         try:
@@ -273,12 +284,15 @@ def AddWorkout():
         except:
             flash("Please make a selection.")
 
-    return render_template('add_workout.html')
+    return render_template('add_workout.html', name=name)
 
 
 @app.route('/add-workout/cardio', methods=['GET', 'POST'])
 @login_required
 def add_cardio():
+
+    name = current_user.name
+
     form = AddCardioForm()
     user = current_user.name
 
@@ -297,12 +311,15 @@ def add_cardio():
 
         return redirect(url_for('AddWorkout'))
 
-    return render_template('add_cardio.html', form=form)
+    return render_template('add_cardio.html', form=form, name=name)
 
 
 @app.route('/add-workout/resistance', methods=['GET', 'POST'])
 @login_required
 def add_resistance():
+
+    name = current_user.name
+
     form = AddResistanceForm()
     user = current_user.name
 
@@ -323,12 +340,14 @@ def add_resistance():
 
         return redirect(url_for('AddWorkout'))
 
-    return render_template('add_resistance.html', form=form)
+    return render_template('add_resistance.html', form=form, name=name)
 
 
 @app.route('/edit-cardio/<id>', methods=['GET', 'POST'])
 @login_required
 def EditCardio(id):
+
+    name = current_user.name
 
     exercise = Cardio.objects(id=str(id)).first()
 
@@ -351,12 +370,14 @@ def EditCardio(id):
     form.intensity.data = exercise.intensity
     form.date.data = str(exercise.date)
 
-    return render_template('edit_cardio.html', form=form)
+    return render_template('edit_cardio.html', form=form, name=name)
 
 
 @app.route('/edit-resistance/<id>', methods=['GET', 'POST'])
 @login_required
 def EditResistance(id):
+
+    name = current_user.name
 
     exercise = Resistance.objects(id=str(id)).first()
 
@@ -383,12 +404,14 @@ def EditResistance(id):
     form.rest.data = exercise.rest
     form.date.data = str(exercise.date)
 
-    return render_template('edit_resistance.html', form=form)
+    return render_template('edit_resistance.html', form=form, name=name)
 
 
 @app.route('/delete-workout/<id>', methods=['GET', 'DELETE'])
 @login_required
 def DeleteWorkout(id):
+
+    name = current_user.name
 
     try:
         exercise = Resistance.objects(id=str(id)).first()
@@ -405,6 +428,9 @@ def DeleteWorkout(id):
 @app.route('/history', methods=['GET', 'POST'])
 @login_required
 def history():
+
+    name = current_user.name
+
     user = current_user.name
 
     if request.method == "POST":
@@ -419,27 +445,33 @@ def history():
         except:
             flash("Please make a selection.")
 
-    return render_template('history.html', user=user)
+    return render_template('history.html', user=user, name=name)
 
 
 @app.route('/history/cardio', methods=['GET', 'POST'])
 @login_required
 def cardio_history():
+
+    name = current_user.name
+
     user = current_user.name
 
     exercises = Cardio.objects(user=user)
 
-    return render_template('cardio_history.html', exercises=exercises, user=user)
+    return render_template('cardio_history.html', exercises=exercises, user=user, name=name)
 
 
 @app.route('/history/resistance', methods=['GET', 'POST'])
 @login_required
 def resistance_history():
+
+    name = current_user.name
+
     user = current_user.name
 
     exercises = Resistance.objects(user=user)
 
-    return render_template('resistance_history.html', exercises=exercises, user=user)
+    return render_template('resistance_history.html', exercises=exercises, user=user, name=name)
 
 
 if __name__ == "__main__":
