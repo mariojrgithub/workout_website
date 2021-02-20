@@ -1,5 +1,6 @@
 import json
 import requests
+import numpy as np
 from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
 from flask_mongoengine import MongoEngine
 
@@ -79,6 +80,30 @@ class Resistance(db.Document, UserMixin):
                 "rest": self.rest,
                 "date": self.date, }
 
+class Vitals(db.Document, UserMixin):
+    user = db.StringField()
+    birthday = db.StringField()
+    sex = db.StringField()
+    height = db.IntField()
+    weight = db.IntField()
+    zipcode = db.IntField()
+    goal1 = db.StringField()
+    goal2 = db.StringField()
+    goal3 = db.StringField()
+    date = db.StringField()
+
+    def to_json(self):
+        return {"user": self.user,
+                "birthday": self.birthday,
+                "sex": self.sex,
+                "height": self.height,
+                "weight": self.weight,
+                "zipcode": self.zipcode,
+                "goal1": self.goal1,
+                "goal2": self.goal2,
+                "goal3": self.goal3,
+                "date": self.date }
+
 
 class News:
     def __init__(self, provider, title, image_url, url, date):
@@ -103,6 +128,23 @@ class Weather:
     self.humidity = humidity
     self.windspeed = windspeed
     self.winddir = winddir
+
+class Quotes(db.Document, UserMixin):
+    text = db.StringField()
+    author = db.StringField()
+
+    def to_json(self):
+        return {"text": self.text,
+                "author": self.author }
+  
+
+
+def get_quote():
+    quotes = Quotes.objects
+    quote = quotes[np.random.choice(len(quotes))]
+
+    return quote
+    
 
 def get_weather(zip):
   
@@ -179,9 +221,21 @@ def load_user(user_id):
 @login_required
 def index():
     name = current_user.name
-    weather = get_weather(46312)
+    
+    try:
+        zipcode = Vitals.objects(user=name).first().zipcode
+    except AttributeError:
+        zipcode = 90034
 
-    return render_template('index.html', name=name, weather=weather)
+
+    weather = get_weather(zipcode)
+
+    quote = get_quote()
+
+    print(quote)
+
+
+    return render_template('index.html', name=name, weather=weather, quote=quote)
 
 
 @app.route('/news', methods=['GET', 'POST'])
@@ -274,6 +328,25 @@ def add_vitals():
     name = current_user.name
 
     form = AddVitalsForm()
+
+    if form.validate_on_submit():
+        vitals = Vitals(user=name,
+                        birthday=str(form.birthday.data),
+                        sex=form.sex.data,
+                        height=form.height.data,
+                        weight=form.weight.data,
+                        zipcode=form.zipcode.data,
+                        goal1=form.goal1.data,
+                        goal2=form.goal2.data,
+                        goal3=form.goal3.data,
+                        date=str(form.date.data)
+                        )
+
+        vitals.save()
+
+        flash("Save was successfull!")
+
+        return redirect(url_for('index'))
 
     return render_template('add_vitals.html', form=form, name=name)
 

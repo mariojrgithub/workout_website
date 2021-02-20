@@ -5,9 +5,7 @@ from wtforms.validators import ValidationError, DataRequired, \
     Email, EqualTo, Length
 
 class AddVitalsForm(FlaskForm):
-    name = StringField(label=('Name'),
-                       validators=[DataRequired(),
-                                   Length(max=64)])
+    
     birthday = DateField(label=('Birthday (YYYY-MM-DD)'),
                              validators=[DataRequired()])
     sex = SelectField(label=('Sex'), choices=['Male', 'Female'],
@@ -19,15 +17,13 @@ class AddVitalsForm(FlaskForm):
     zipcode = IntegerField(label=('ZIP Code'),
                              validators=[DataRequired()])
 
-    goal1 = StringField(label=('Name'),
+    goal1 = StringField(label=('Goal 1'),
                        validators=[DataRequired(),
                                    Length(max=128)])
-    goal2 = StringField(label=('Name'),
-                       validators=[DataRequired(),
-                                   Length(max=128)])                               
-    goal3 = StringField(label=('Name'),
-                       validators=[DataRequired(),
-                                   Length(max=128)])
+    goal2 = StringField(label=('Goal 2'),
+                       validators=[Length(max=128)])                               
+    goal3 = StringField(label=('Goal 3'),
+                       validators=[Length(max=128)])
 
     date = DateField(label=('Date (YYYY-MM-DD)'),
                      validators=[DataRequired()])
