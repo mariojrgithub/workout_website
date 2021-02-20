@@ -30,9 +30,9 @@
         <td>{{ ex.intensity }}</td>
         <td>{{ ex.date }}</td>
         <td style="width: 10em;"><a href="{{ url_for('EditCardio', id=ex.id) }}"><button
-              class="btn btn-success navbar-btn">Edit</button> </a>
+              class="btn btn-success navbar-btn" style="width: 5rem; margin-bottom: 0.2rem;">Edit</button> </a>
           <a href="{{ url_for('DeleteWorkout', id=ex.id) }}"><button class="btn btn-danger navbar-btn"
-              onclick="return confirm('Are you sure you wish to delete?');">Delete</button> </a>
+              onclick="return confirm('Are you sure you wish to delete?');" style="width: 5rem;">Delete</button> </a>
         </td>
       </tr>
       {% endfor %}

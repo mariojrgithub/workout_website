@@ -122,15 +122,16 @@ def get_weather(zip):
   time = response.json()['location']['localtime'].split()[1]
   icon = response.json()['current']['condition']['icon']
   condition = response.json()['current']['condition']['text']
-  temp = response.json()['current']['temp_f']
-  windchill = response.json()['current']['feelslike_f']
+  temp = int(response.json()['current']['temp_f'])
+  windchill = int(response.json()['current']['feelslike_f'])
   humidity = response.json()['current']['humidity']
   windspeed = response.json()['current']['wind_mph']
   winddir = response.json()['current']['wind_dir']
 
   if int(time.split(':')[0]) > 12:
-      time = time.split(':')[0].replace(time.split(':')[0], str(int(time.split(':')[0]) - 12)) + ':' + time.split(':')[1]
-  
+      time = time.split(':')[0].replace(time.split(':')[0], str(int(time.split(':')[0]) - 12)) + ':' + time.split(':')[1] + 'pm'
+  else:
+      time = time + 'am'
 
   return Weather(name, state, date, time, 
                icon, condition, temp, windchill, 
@@ -196,7 +197,7 @@ def news():
         try:
             news_list = get_news(query, page)
         except:
-            news_list = get_news('fitness', 1)
+            news_list = get_news('fitness', page)
 
         return render_template('news.html', news_list=news_list)
 
@@ -215,16 +216,14 @@ def login():
     form = LoginForm()
     email = form.email.data
     user = Users.objects(email=email).first()
-
+    
     if user:
         if check_password_hash(user.password, form.password.data):
             login_user(user)
             flash("Login was successfull!")
             return redirect(url_for('index'))
         else:
-            flash("Invalid Credentials!")
-    else:
-            flash("Invalid Credentials!")
+            flash("Invalid credentials.")
 
     return render_template('login.html', form=form)
 
