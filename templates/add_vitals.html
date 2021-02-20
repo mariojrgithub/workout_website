@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <br>
+    <h3>Add Vitals</h3>
+    {% for field, errors in form.errors.items() %}
+    {{ ', '.join(errors) }}
+    {% endfor %}
+
+<form class="form-horizontal" method="POST" action="">
+    {{ form.csrf_token() }}
+
+<div class="form-group">
+    {{ form.name.label }}
+    {{ form.name(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.birthday.label }}
+    {{ form.birthday(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.sex.label }}
+    {{ form.sex(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.height.label }}
+    {{ form.height(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.weight.label }}
+    {{ form.weight(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.zipcode.label }}
+    {{ form.zipcode(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.goal1.label }}
+    {{ form.goal1(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.goal2.label }}
+    {{ form.goal2(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.goal3.label }}
+    {{ form.goal3(class="form-control") }}
+</div>
+
+<div class="form-group">
+    {{ form.date.label }}
+    {{ form.date(class="form-control") }}
+</div>
+<div class="form-group">
+    {{ form.submit(class="btn btn-primary")}}
+</div>
+</form>
+
+</div>
+{% endblock %}

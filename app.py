@@ -11,6 +11,7 @@ from create_user import CreateUserForm
 from add_workout import AddCardioForm, AddResistanceForm
 from login import LoginForm
 from edit_workout import EditCardioForm, EditResistanceForm
+from add_vitals import AddVitalsForm
 from config import *
 
 app = Flask(__name__)
@@ -266,6 +267,15 @@ def register():
 
     return render_template('register.html', form=form)
 
+
+@app.route('/add-vitals', methods=['GET', 'POST'])
+@login_required
+def add_vitals():
+    name = current_user.name
+
+    form = AddVitalsForm()
+
+    return render_template('add_vitals.html', form=form, name=name)
 
 @app.route('/add-workout', methods=['GET', 'POST'])
 @login_required
