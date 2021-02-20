@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 import numpy as np
 from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
 from flask_mongoengine import MongoEngine
@@ -185,7 +186,7 @@ def get_news(query, page):
 
     url = "https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/search/NewsSearchAPI"
 
-    querystring = {"q": query, "pageNumber": page, "pageSize": "8", "autoCorrect": "true",
+    querystring = {"q": query, "pageNumber": page, "pageSize": "4", "autoCorrect": "true",
                    "withThumbnails": "true", "fromPublishedDate": "null", "toPublishedDate": "null"}
 
     headers = {
@@ -254,8 +255,10 @@ def news():
 
         try:
             news_list = get_news(query, page)
+   
         except:
             news_list = get_news('fitness', page)
+      
 
         return render_template('news.html', news_list=news_list, name=name)
 
