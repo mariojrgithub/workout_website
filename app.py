@@ -218,6 +218,10 @@ def load_user(user_id):
     return Users.objects(id=str(user_id)).first()
 
 
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
 @app.route('/')
 @login_required
 def index():
@@ -269,7 +273,7 @@ def news():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
