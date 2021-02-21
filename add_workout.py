@@ -14,7 +14,7 @@ class AddCardioForm(FlaskForm):
                            validators=[DataRequired()])
     intensity = SelectField(label=('Intensity'), choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                              validators=[DataRequired()])
-    date = DateField(label=('Date (YYYY-MM-DD)'),
+    date = DateField(label=('Date'),
                      validators=[DataRequired()])
 
     submit = SubmitField(label=('Submit'))
@@ -34,7 +34,7 @@ class AddResistanceForm(FlaskForm):
                              validators=[DataRequired()])
     rest = IntegerField(label=('Rest (seconds)'),
                              validators=[DataRequired()])
-    date = DateField(label=('Date (YYYY-MM-DD)'),
+    date = DateField(label=('Date'),
                      validators=[DataRequired()])
 
     submit = SubmitField(label=('Submit'))

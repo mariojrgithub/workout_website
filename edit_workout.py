@@ -32,7 +32,7 @@ class EditResistanceForm(FlaskForm):
                              validators=[DataRequired()])
     rest = IntegerField(label=('Rest (seconds)'),
                              validators=[DataRequired()])
-    date = StringField(label=('Date (YYYY-MM-DD)'),
+    date = StringField(label=('Date'),
                      validators=[DataRequired()])
 
     submit = SubmitField(label=('Submit'))

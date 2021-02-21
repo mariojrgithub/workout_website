@@ -25,7 +25,7 @@ class AddVitalsForm(FlaskForm):
     goal3 = StringField(label=('Goal 3'),
                        validators=[Length(max=128)])
 
-    date = DateField(label=('Date (YYYY-MM-DD)'),
+    date = DateField(label=('Date'),
                      validators=[DataRequired()])
 
     submit = SubmitField(label=('Submit'))
