@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, PasswordField, DateField, BooleanField, \
-    SubmitField
+    SubmitField, SelectField
 from wtforms.validators import ValidationError, DataRequired, \
     Email, EqualTo, Length
 
@@ -10,11 +10,11 @@ class EditCardioForm(FlaskForm):
     name = StringField(label=('Name'),
                        validators=[DataRequired(),
                                    Length(max=64)])
-    duration = IntegerField(label=('Duration (seconds)'),
+    duration = IntegerField(label=('Duration (minutes)'),
                            validators=[DataRequired()])
     intensity = IntegerField(label=('Intensity'),
                              validators=[DataRequired()])
-    date = StringField(label=('Date (YYYY-MM-DD)'),
+    date = StringField(label=('Date'),
                      validators=[DataRequired()])
 
     submit = SubmitField(label=('Submit'))

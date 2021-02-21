@@ -11,7 +11,7 @@
     {% for field, errors in form.errors.items() %}
     {{ ', '.join(errors) }}
     {% endfor %}
-    <form class="form-horizontal" method="POST" action="">
+    <form class="form-horizontal" method="POST" action="" autocomplete="off">
         {{ form.csrf_token() }}
         <div class="form-group">
             {{ form.name.label }}

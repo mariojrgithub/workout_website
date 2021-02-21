@@ -10,7 +10,7 @@ class AddCardioForm(FlaskForm):
     name = SelectField(label=('Name'), choices=['Walk', 'Run', 'Hike', 'Bike', 'Spin', 'Swim', 'Rowing', 'Stairs'],
                        validators=[DataRequired(),
                                    Length(max=64)])
-    duration = IntegerField(label=('Duration (seconds)'),
+    duration = SelectField(label=('Duration (minutes)'), choices=[x for x in range(1, 121)],
                            validators=[DataRequired()])
     intensity = SelectField(label=('Intensity'), choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                              validators=[DataRequired()])
