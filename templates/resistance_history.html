@@ -11,22 +11,27 @@
   <br>
   <table class="table table-dark">
     <thead class="thead-light">
-
+     
       <tr>
 
         <th scope="col">Name</th>
+        
         <th scope="col">Weight (lbs)</th>
+        
         <th scope="col">Sets</th>
         <th scope="col">Reps</th>
         <th scope="col">Date</th>
       </tr>
-
+      
     </thead>
     <tbody>
       {% for ex in exercises %}
+      {% if ex.weight != "" %}
       <tr>
         <td><a href="{{ url_for('EditResistance', id=ex.id) }}">{{ ex.name }}</a></td>
+        
         <td>{{ ex.weight }}</td>
+       
         <td>{{ ex.sets }}</td>
         <td>{{ ex.repetitions }}</td>
         <td>{{ ex.date }}</td>
@@ -35,6 +40,21 @@
           
         </td>
       </tr>
+      {% else %}
+      <tr>
+        <td><a href="{{ url_for('EditResistance', id=ex.id) }}">{{ ex.name }}</a></td>
+        
+        <td>body</td>
+        <td>{{ ex.sets }}</td>
+        <td>{{ ex.repetitions }}</td>
+        <td>{{ ex.date }}</td>
+        <td><a href="{{ url_for('DeleteWorkout', id=ex.id) }}"><button class="btn btn-danger navbar-btn"
+          onclick="return confirm('Are you sure you wish to delete?');" style="width:fit-content;">X</button> </a>
+          
+        </td>
+      </tr>
+
+       {% endif %}
       {% endfor %}
 
     </tbody>

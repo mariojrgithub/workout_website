@@ -65,7 +65,7 @@ class Resistance(db.Document, UserMixin):
     user = db.StringField()
     extype = db.StringField()
     name = db.StringField()
-    weight = db.IntField()
+    weight = db.StringField()
     sets = db.IntField()
     repetitions = db.IntField()
     rest = db.IntField()

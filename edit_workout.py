@@ -24,8 +24,8 @@ class EditResistanceForm(FlaskForm):
     name = StringField(label=('Name'),
                        validators=[DataRequired(),
                                    Length(max=64)])
-    weight = IntegerField(label=('Weight (lbs)'),
-                             validators=[DataRequired()])
+    weight = StringField(label=('Weight (lbs)'))
+
     sets = IntegerField(label=('Sets'),
                              validators=[DataRequired()])
     repetitions = IntegerField(label=('Repetitions'),

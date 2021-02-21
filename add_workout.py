@@ -26,8 +26,8 @@ class AddResistanceForm(FlaskForm):
                                 'Hamstring Curl', 'Plank', 'Crunches', 'Side Plank', 'Ab Rotation'],
                        validators=[DataRequired(),
                                    Length(max=64)])
-    weight = IntegerField(label=('Weight (lbs)'),
-                             validators=[DataRequired()])
+    weight = StringField(label=('Weight (lbs)'))
+
     sets = SelectField(label=('Sets'), choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                              validators=[DataRequired()])
     repetitions = IntegerField(label=('Repetitions'),
