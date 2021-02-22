@@ -227,21 +227,21 @@ def home():
 def index():
     name = current_user.name
     
-    try:
+    try: 
+
         zipcode = Vitals.objects(user=name).first().zipcode
+
+        weather = get_weather(zipcode)
+
+        quote = get_quote()
+
+        return render_template('index.html', name=name, weather=weather, quote=quote)
+
     except AttributeError:
-        zipcode = 90034
 
+        flash("Must Finish Registration to Continue.")
 
-    weather = get_weather(zipcode)
-
-    quote = get_quote()
-
-    print(quote)
-
-
-    return render_template('index.html', name=name, weather=weather, quote=quote)
-
+        return redirect(url_for('add_vitals'))
 
 @app.route('/news', methods=['GET', 'POST'])
 @login_required

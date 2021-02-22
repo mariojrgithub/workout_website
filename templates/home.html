@@ -6,103 +6,34 @@
 {% block body %}
 
 
-<div class="container-fluid">
-    <div class="row" >
-      <div class="col-lg-12">
-        <div class="carousel">
-          <div class="other-content">
-            <h1>Mario Sanchez, Jr. Personal Training</h1>
-            <h3>Effective * Safe * Personalized</h3>
-            <hr>
-            
-            <a href="{{ url_for('login') }}" ><button id="start" class="btn btn-default btn-lg">Get Started</button></a>
-           
-          </div>
-          <div class="slide show" style="background-image: url('/static/rob-bye-78646-unsplash.jpg');"></div>
-  <div class="slide" style="background-image: url('/static/pexels-photo-305239.jpeg');"></div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="row" >
-      <div class="col-lg-12">
-        <h2 id="about">About Me</h2>
-        <hr>
-        <a href="#"><img src="https://drive.google.com/uc?export=view&id=1Fp3y9pchWSnRShFOiClqW_ERYkEkUyRn" alt="My Picture" style="display: block; margin: 0 auto; width: 15em;"></a>
-        <h4 id="name">Mario Sanchez, Jr.</h4>
-          <h4>Owner/Operator</h4>
-      </div>
-        
-    </div>
-    
-     <div class="row" >
-      <div class="col-lg-12">
-        <h2 id="mission">My Mission</h2>
-        <hr>
-        <h5>Deliver the most effective in-home health and fitness experience; professional, fun, engaging, and most importantly, safe.</h5>
-        <br>
-        <h5>Design personalized plans enabling the achievement of your goals.</h5>
-        <br>
-        <h5>I strive to make health and fitness easy to incorporate into your busy and demanding lifestyle and welcome those</h5>
-        <h5>with even the most complex health conditions.</h5>
-       </div>
-       </div>
-    
-    <div class="row" >
-      <div class="col-lg-12">
-        <div class="qualifications">
-          <div class="other-text"><div><h2 id="exp">Qualifications</h2><hr></div>
-            <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-    <div class="col-sm-4">
-      One of three columns
-    </div>
-  </div>
-</div>
-          </div>
-        <div class="parallax"></div>  
-        </div>
-        
-      </div>
-    </div>
+<div class="container-fluid" style="text-align: center;">
+<div class="card bg-dark text-white">
+  <img class="card-img" src="/static/rob-bye-78646-unsplash.jpg" alt="Card image">
+  <div class="card-img-overlay">
+    <h3 class="card-title">Mario Sanchez, Jr. Personal Training</h3>
+    <p class="card-text">Effective * Safe * Personalized</p>
   
-   </div>
-      
+    <a href="{{ url_for('register') }}"><button id="start" class="btn btn-default btn-lg">Register For Free</button></a>
+    <br>
+    <br>
+    <hr>
+    <h4 class="card-title">Mario Sanchez, Jr.</h4>
    
-    <script>
-      /**
-       * @param  {number} interval (in milliseconds)
-       */
-      function cycleBackgrounds(interval) {
-        let index = 0
+    <p class="card-text">Owner/Operator</p>
+   <hr>
+    <div>
+      <h4>My Mission</h4>
+          <h5>Deliver the most effective in-home health and fitness experience; professional, fun, engaging, and most importantly, safe.</h5>
+              <br>
+              <h5>Design personalized plans enabling the achievement of your goals.</h5>
+              <br>
+              <h5>I strive to make health and fitness easy to incorporate into your busy and demanding lifestyle and welcome those</h5>
+              <h5>with even the most complex health conditions.</h5>
+      </div>  
 
-        const $imageEls = document.querySelectorAll('.carousel .slide') // Get the images to be cycled.
+  </div>
 
-        setInterval(() => {
-          // Get the next index.  If at end, restart to the beginning.
-          index = index + 1 < $imageEls.length ? index + 1 : 0
-
-          // Show the next
-          $imageEls[index].classList.add('show')
-
-        // Find the previous.
-        const previous = index - 1 < 0 ? $imageEls.length - 1 : index - 1;
-
-          // Hide the previous
-          $imageEls[previous].classList.remove('show')
-        }, interval)
-      }
-
-      document.addEventListener("DOMContentLoaded", function() {
-        cycleBackgrounds(5000);
-      });
-    </script>
+</div>
   
-
+</div>
   {% endblock %}

@@ -54,16 +54,16 @@
             <a class="nav-link" href="#">{{ name }}<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('add_vitals')}}">Add Vitals</a>
+            <a class="nav-link" href="{{url_for('index')}}">Add Measurements</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('AddWorkout')}}">Add Workout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('history')}}">View History</a>
+            <a class="nav-link" href="{{url_for('history')}}">History</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('news')}}">News Search</a>
+            <a class="nav-link" href="{{url_for('news')}}">News</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="mailto:mariosanchezjr12@gmail.com">Email Mario</a>
@@ -72,21 +72,18 @@
             <a class="nav-link" href="https://www.venmo.com/Mario-SanchezJr" target="_blank">Buy Sessions</a>
           </li>
         </ul>
-
       </div>
-    
     <a href="{{url_for('logout')}}"><button style="margin-right: 1em" class="btn btn-success navbar-btn">Logout</button>
     </a>
-
-    {% else %}
-
-    <a href="{{url_for('register')}}"><button class="btn btn-success navbar-btn">Signup</button> </a>
-  
+  {% else %}
+   
   </div>
-  
-    {% endif %}
 
+  <a href="{{url_for('login')}}"><button class="btn btn-success navbar-btn">Login</button></a>
+
+  {% endif %}
   </nav>
+  
 
   {% with messages = get_flashed_messages() %}
 
@@ -102,6 +99,7 @@
     {{message}}
 
   </div>
+
   {% endfor %}
 
   {% endif %}
