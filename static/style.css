@@ -13,4 +13,5 @@
   background-image: url('/static/jacob-repko-64434-unsplash.jpg');
   background-size: cover;
   position: relative;
+  text-shadow: 1px 1px 1px #FFF;
 }
