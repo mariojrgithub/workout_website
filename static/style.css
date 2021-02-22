@@ -12,4 +12,5 @@
 #home {
   background-image: url('/static/jacob-repko-64434-unsplash.jpg');
   background-size: cover;
+  position: relative;
 }
