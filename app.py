@@ -218,11 +218,11 @@ def load_user(user_id):
     return Users.objects(id=str(user_id)).first()
 
 
-@app.route('/home')
+@app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/')
+@app.route('/index')
 @login_required
 def index():
     name = current_user.name
