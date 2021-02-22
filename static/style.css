@@ -8,3 +8,8 @@
   border: 1px solid #fff;
   border-radius: 50px;
 }
+
+#home {
+  background-image: url('/static/jacob-repko-64434-unsplash.jpg');
+  background-size: cover;
+}
