@@ -30,9 +30,9 @@ class AddResistanceForm(FlaskForm):
 
     sets = SelectField(label=('Sets'), choices=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                              validators=[DataRequired()])
-    repetitions = IntegerField(label=('Repetitions'),
+    repetitions = SelectField(label=('Repetitions'), choices=[x for x in range(1, 51)],
                              validators=[DataRequired()])
-    rest = IntegerField(label=('Rest (seconds)'),
+    rest = SelectField(label=('Rest (seconds)'), choices=[x for x in range(30, 181)],
                              validators=[DataRequired()])
     date = DateField(label=('Date'),
                      validators=[DataRequired()])

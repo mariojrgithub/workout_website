@@ -83,10 +83,10 @@ class Resistance(db.Document, UserMixin):
 
 class Vitals(db.Document, UserMixin):
     user = db.StringField()
-    birthday = db.StringField()
     sex = db.StringField()
     height = db.IntField()
     weight = db.IntField()
+    birthday = db.StringField()
     zipcode = db.IntField()
     goal1 = db.StringField()
     goal2 = db.StringField()
@@ -95,10 +95,10 @@ class Vitals(db.Document, UserMixin):
 
     def to_json(self):
         return {"user": self.user,
-                "birthday": self.birthday,
                 "sex": self.sex,
                 "height": self.height,
                 "weight": self.weight,
+                "birthday": self.birthday,
                 "zipcode": self.zipcode,
                 "goal1": self.goal1,
                 "goal2": self.goal2,
@@ -338,10 +338,10 @@ def add_vitals():
 
     if form.validate_on_submit():
         vitals = Vitals(user=name,
-                        birthday=str(form.birthday.data),
                         sex=form.sex.data,
                         height=form.height.data,
                         weight=form.weight.data,
+                        birthday=str(form.birthday.data),
                         zipcode=form.zipcode.data,
                         goal1=form.goal1.data,
                         goal2=form.goal2.data,

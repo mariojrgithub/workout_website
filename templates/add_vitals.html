@@ -16,12 +16,6 @@
     {{ form.csrf_token() }}
 
 <div class="form-group">
-    <div class="bootstrap-iso">
-    {{ form.birthday.label }}
-    {{ form.birthday(class="form-control") }}
-</div>
-</div>
-<div class="form-group">
     {{ form.sex.label }}
     {{ form.sex(class="form-control") }}
 </div>
@@ -33,28 +27,38 @@
     {{ form.weight.label }}
     {{ form.weight(class="form-control") }}
 </div>
+
+<div class="bootstrap-iso">
+    <div class="form-group">
+        {{ form.birthday.label }}
+        {{ form.birthday(class="form-control", placeholder="Select") }}
+    </div>
+    </div>
+
 <div class="form-group">
     {{ form.zipcode.label }}
     {{ form.zipcode(class="form-control") }}
 </div>
 <div class="form-group">
     {{ form.goal1.label }}
-    {{ form.goal1(class="form-control") }}
+    {{ form.goal1(class="form-control", placeholder="Required") }}
 </div>
 <div class="form-group">
     {{ form.goal2.label }}
-    {{ form.goal2(class="form-control") }}
+    {{ form.goal2(class="form-control", placeholder="Optional") }}
 </div>
 <div class="form-group">
     {{ form.goal3.label }}
-    {{ form.goal3(class="form-control") }}
+    {{ form.goal3(class="form-control", placeholder="Optional") }}
 </div>
+
 <div class="bootstrap-iso">
 <div class="form-group">
     {{ form.date.label }}
-    {{ form.date(class="form-control") }}
+    {{ form.date(class="form-control", placeholder="Select") }}
 </div>
 </div>
+
 <div class="form-group">
     {{ form.submit(class="btn btn-primary")}}
 </div>
@@ -67,8 +71,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 <script>
+    
     $(document).ready(function(){
-      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var date_input=$('input[name="birthday"]'); //our date input has the name "date"
       var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
       var options={
         format: 'yyyy-mm-dd',
@@ -80,7 +85,7 @@
     })
 
     $(document).ready(function(){
-      var date_input=$('input[name="birthday"]'); //our date input has the name "date"
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
       var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
       var options={
         format: 'yyyy-mm-dd',
