@@ -51,10 +51,10 @@
         <ul class="navbar-nav mr-auto">
           {% if current_user.is_authenticated %}
           <li class="nav-item active">
-            <a class="nav-link" href="#">{{ name }}<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{url_for('index')}}">{{ name }}<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('index')}}">Add Measurements</a>
+            <a class="nav-link" href="#">Add Measurements</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('AddWorkout')}}">Add Workout</a>

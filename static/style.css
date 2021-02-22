@@ -9,9 +9,26 @@
   border-radius: 50px;
 }
 
-#home {
+.home {
+  position: relative;
+  
+}
+
+.home::before {    
+  content: "";
   background-image: url('/static/jacob-repko-64434-unsplash.jpg');
   background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+}
+
+.text {
   position: relative;
-  text-shadow: 1px 1px 1px #FFF;
+  text-align: center; 
+  color: #fff; 
+  text-shadow: 1px 1px 1px black;
 }
