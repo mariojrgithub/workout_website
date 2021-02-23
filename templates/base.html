@@ -42,16 +42,12 @@
 
       <a class="navbar-brand" href="{{url_for('index')}}"><img src="/static/SmallLogo.png" height="45em" alt="ProTrainingLA Logo"></a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      {% if current_user.is_authenticated %}
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         
         <ul class="navbar-nav mr-auto">
           
-          {% if current_user.is_authenticated %}
           <li class="nav-item active">
             <a class="nav-link" href="{{url_for('index')}}">{{ name }}<span class="sr-only">(current)</span></a>
           </li>
@@ -62,10 +58,10 @@
             <a class="nav-link" href="{{url_for('AddWorkout')}}">Add Workout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('history')}}">History</a>
+            <a class="nav-link" href="{{url_for('history')}}">View History</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('news')}}">News</a>
+            <a class="nav-link" href="{{url_for('news')}}">News Search</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="mailto:mariosanchezjr12@gmail.com">Email Mario</a>
@@ -74,18 +70,26 @@
             <a class="nav-link" href="https://www.venmo.com/Mario-SanchezJr" target="_blank">Buy Sessions</a>
           </li>
         </ul>
+ 
       </div>
-    <a href="{{url_for('logout')}}"><button style="margin-right: 1em" class="btn btn-success navbar-btn">Logout</button>
-    </a>
-  {% else %}
-   
-  </div>
 
-  <a href="{{url_for('login')}}"><button class="btn btn-success navbar-btn">Login</button></a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <a href="{{url_for('logout')}}"><button style="margin: 1em 0" class="btn btn-success navbar-btn">Logout</button>
+    </a>
+   
+
+  {% else %} 
+  <a href="{{url_for('logout')}}"><button style="margin: 1em 0" class="btn btn-success navbar-btn">Login</button></a>
 
   {% endif %}
-  </nav>
-  
+</div>
+</nav>    
+
 
   {% with messages = get_flashed_messages() %}
 
