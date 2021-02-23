@@ -28,7 +28,7 @@
 
     <div class="card-img-overlay">
         <h5 class="card-title">{{ weather.name }}, {{weather.state}} Weather</h5>
-        <p class="card-text">As of {{ weather.time }} on {{ weather.date }}</p>
+        <p class="card-text">As of {{ weather.time }} on {{ weather.date.split('-')[1] + '/' + weather.date.split('-')[2] + '/' + weather.date.split('-')[0].split('0')[1] }}</p>
         <h1 class="card-text">{{ weather.temp }}°</h1>
         <p class="card-text">Feels Like {{ weather.windchill }}°</p>
         <h2 class="card-text">{{ weather.condition }}</h2>

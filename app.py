@@ -1,6 +1,7 @@
 import json
 import requests
 import time
+
 import numpy as np
 from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
 from flask_mongoengine import MongoEngine
@@ -548,7 +549,25 @@ def cardio_history():
 
     exercises = Cardio.objects(user=user)
 
-    return render_template('cardio_history.html', exercises=exercises, user=user, name=name)
+    dates = set([x.date for x in exercises])
+
+    dates = list(dates)
+
+    dates.sort()
+
+    if request.method == "POST":
+
+        try:
+            date = request.form.get("date")
+            exercises = Cardio.objects(date=date)
+            
+            print(date)
+
+            return render_template('cardio_history.html', exercises=exercises, user=user, name=name, dates=dates)
+        except:
+            pass
+
+    return render_template('cardio_history.html', exercises=exercises, user=user, name=name, dates=dates)
 
 
 @app.route('/history/resistance', methods=['GET', 'POST'])
@@ -561,7 +580,25 @@ def resistance_history():
 
     exercises = Resistance.objects(user=user)
 
-    return render_template('resistance_history.html', exercises=exercises, user=user, name=name)
+    dates = set([x.date for x in exercises])
+
+    dates = list(dates)
+
+    dates.sort()
+
+    if request.method == "POST":
+
+        try:
+            date = request.form.get("date")
+            exercises = Resistance.objects(date=date)
+            
+            print(date)
+
+            return render_template('resistance_history.html', exercises=exercises, user=user, name=name, dates=dates)
+        except:
+            pass
+
+    return render_template('resistance_history.html', exercises=exercises, user=user, name=name, dates=dates)
 
 
 @app.errorhandler(404)
