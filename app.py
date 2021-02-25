@@ -17,7 +17,11 @@ from edit_workout import EditCardioForm, EditResistanceForm
 from add_vitals import AddVitalsForm
 from config import *
 
+from charts import create_axis
+
+
 app = Flask(__name__)
+
 app.config['MONGODB_SETTINGS'] = {
     'db': 'workout',
     'host': 'localhost',
@@ -27,6 +31,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 db = MongoEngine()
 db.init_app(app)
+
 
 # login code
 login_manager = LoginManager()
@@ -213,6 +218,38 @@ def get_news(query, page):
     return final
 
 
+@app.route('/charts')
+@login_required
+def charts():
+    user = current_user.name
+    cardio = Cardio.objects(user=user)
+    resistance = Resistance.objects(user=user)
+
+    months = {
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April',
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'August',
+        9: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December'
+    }
+
+    month = 2
+
+    x, y, exercises = create_axis(cardio, resistance, month)
+
+    xy = list(zip(x, y))
+
+    month_text = months[month]
+
+    return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text)
+
 @login_manager.user_loader
 def load_user(user_id):
 
@@ -227,7 +264,7 @@ def home():
 @login_required
 def index():
     name = current_user.name
-    
+
     try: 
 
         zipcode = Vitals.objects(user=name).first().zipcode
@@ -235,6 +272,7 @@ def index():
         weather = get_weather(zipcode)
 
         quote = get_quote()
+
 
         return render_template('index.html', name=name, weather=weather, quote=quote)
 
