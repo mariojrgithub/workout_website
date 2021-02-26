@@ -14,6 +14,10 @@
 
   <link rel="stylesheet" href="/static/style.css">
 
+  <!-- add icon link -->
+  <link rel = "icon" href ="/static/SmallLogo.png" type = "image/x-icon"> 
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 
   <style>
@@ -79,12 +83,12 @@
       <span class="navbar-toggler-icon"></span>
       </button>
 
-    <a href="{{url_for('logout')}}"><button style="margin: 1em 0" class="btn btn-success navbar-btn">Logout</button>
+    <a href="{{url_for('logout')}}"><button style="margin: 0.5em 0.5em" class="btn btn-success navbar-btn">Logout</button>
     </a>
    
 
   {% else %} 
-  <a href="{{url_for('login')}}"><button style="margin: 1em 0" class="btn btn-success navbar-btn">Login</button></a>
+  <a href="{{url_for('login')}}"><button style="margin: 0.5em 0.5em" class="btn btn-success navbar-btn">Login</button></a>
 
   {% endif %}
 </div>

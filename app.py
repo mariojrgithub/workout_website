@@ -218,47 +218,18 @@ def get_news(query, page):
     return final
 
 
-@app.route('/charts')
-@login_required
-def charts():
-    user = current_user.name
-    cardio = Cardio.objects(user=user)
-    resistance = Resistance.objects(user=user)
-
-    months = {
-        1: 'January',
-        2: 'February',
-        3: 'March',
-        4: 'April',
-        5: 'May',
-        6: 'June',
-        7: 'July',
-        8: 'August',
-        9: 'September',
-        10: 'October',
-        11: 'November',
-        12: 'December'
-    }
-
-    month = 2
-
-    x, y, exercises, cardio_percent, resistance_percent = create_axis(cardio, resistance, month)
-
-    xy = list(zip(x, y))
-
-    month_text = months[month]
-
-    return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text, cardio_percent=cardio_percent, resistance_percent=resistance_percent)
-
 @login_manager.user_loader
 def load_user(user_id):
 
     return Users.objects(id=str(user_id)).first()
 
-
 @app.route('/')
 def home():
-    return render_template('home.html')
+    try:
+        name = current_user.name
+        return render_template('home.html', name=name)
+    except:
+        return render_template('home.html')
 
 @app.route('/index')
 @login_required
@@ -631,6 +602,41 @@ def resistance_history():
             pass
 
     return render_template('resistance_history.html', exercises=exercises, user=user, name=name, dates=dates)
+
+
+@app.route('/charts')
+@login_required
+def charts():
+    name = current_user.name
+    cardio = Cardio.objects(user=name)
+    resistance = Resistance.objects(user=name)
+
+    months = {
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April',
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'August',
+        9: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December'
+    }
+
+    month = 2
+
+    x, y, exercises, cardio_percent, resistance_percent = create_axis(cardio, resistance, month)
+
+    xy = list(zip(x, y))
+
+    month_text = months[month]
+
+    return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text, cardio_percent=cardio_percent, resistance_percent=resistance_percent, name=name)
+
+
 
 
 @app.errorhandler(404)

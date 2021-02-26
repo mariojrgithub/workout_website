@@ -10,9 +10,10 @@
 <br>
 <h3>{{ month_text }} Workouts</h3>
     
-<canvas style="min-height: 75%;" id="myChart" ></canvas>
+<canvas style="margin-left: -1em;" id="myChart" ></canvas>
 <br>
-<canvas style="padding-bottom: 1em;" id="myChart2" ></canvas>
+
+<canvas style="height: 25%; margin-bottom: 2em;" id="myChart2" ></canvas>
 
 </div>
 
@@ -63,10 +64,7 @@ var myChart = new Chart(ctx, {
                 position: 'bottom'
             }],
             yAxes: [{
-                scaleLabel: {
-                display: true,
-                labelString: 'Exercises'
-                },
+                
                 ticks: {
                    
                     callback: function(value, index, values) {
