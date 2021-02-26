@@ -242,13 +242,13 @@ def charts():
 
     month = 2
 
-    x, y, exercises = create_axis(cardio, resistance, month)
+    x, y, exercises, cardio_percent, resistance_percent = create_axis(cardio, resistance, month)
 
     xy = list(zip(x, y))
 
     month_text = months[month]
 
-    return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text)
+    return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text, cardio_percent=cardio_percent, resistance_percent=resistance_percent)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -323,8 +323,6 @@ def login():
     try: 
         if email:
             user = Users.objects(email=email).first()
- 
-            print(email == user.email)
 
             if check_password_hash(user.password, form.password.data):
                 login_user(user)
@@ -598,8 +596,6 @@ def cardio_history():
         try:
             date = request.form.get("date")
             exercises = Cardio.objects(date=date)
-            
-            print(date)
 
             return render_template('cardio_history.html', exercises=exercises, user=user, name=name, dates=dates)
         except:
@@ -629,8 +625,6 @@ def resistance_history():
         try:
             date = request.form.get("date")
             exercises = Resistance.objects(date=date)
-            
-            print(date)
 
             return render_template('resistance_history.html', exercises=exercises, user=user, name=name, dates=dates)
         except:

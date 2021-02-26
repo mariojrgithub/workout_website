@@ -6,19 +6,23 @@
 
 {% block body %}
 
-<div class="container" style="text-align: center;">
+<div class="container" style="text-align: center; max-height: 100vh;">
 <br>
 <h3>{{ month_text }} Workouts</h3>
     
 <canvas id="myChart" ></canvas>
+<br>
+<canvas style="padding-bottom: 2em;" id="myChart2" ></canvas>
 
 </div>
+
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
    
     type: 'scatter',
     data: {
+        
         datasets: [{
             label: 'Exercises',
             data: [{
@@ -29,11 +33,22 @@ var myChart = new Chart(ctx, {
                 {% endfor %}
             }],
             borderColor: '#2196f3',
-            backgroundColor: '#2196f3',
+            backgroundColor: function(context) {
+                if(context.dataIndex < 42){
+                    var index = context.dataIndex
+                    var value = context.dataset.data[index].y
+                    if(value > 8){
+                        return 'blue'
+                    } else if(value > 0) {
+                        return 'red'
+                    }
+                }
+            },
             pointRadius: 3
         }]
     },
     options: {
+
         scales: {
             xAxes: [{
                 scaleLabel: {
@@ -53,17 +68,30 @@ var myChart = new Chart(ctx, {
                 labelString: 'Exercises'
                 },
                 ticks: {
-                    // Include a dollar sign in the ticks
+                   
                     callback: function(value, index, values) {
                         return {{ exercises | tojson }}[value - 1]
                     },
                     stepSize: 1 
                 }
             }]
-        }
+        },
     }
 
 });
+
+var ctx2 = document.getElementById('myChart2').getContext('2d');
+var myPieChart = new Chart(ctx2, {
+    type: 'pie',
+    data: { 
+        datasets: [{
+            data: [{{ resistance_percent }}, {{ cardio_percent }}],
+            backgroundColor: ['Blue','Red']
+        }],
+        labels: ['Resistance', 'Cardio']
+    }
+});
+
 </script>
 
 {% endblock %}

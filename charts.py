@@ -4,7 +4,7 @@ import numpy as np
 def create_axis(cardio, resistance, month):
 
   # define exercises
-  exercises = ['Walk', 'Run', 'Hike', 'Bike', 'Spin', 'Swim', 'Rowing', 
+  exercises = ['Bike', 'Spin', 'Swim', 'Rowing', 'Walk', 'Run', 'Hike', 
           'Stairs', 'Press', 'Pushup', 'Tricep Ext', 'Pull/Row', 'Pullup', 
           'Pulldown', 'Bicep Curl', 'Squat', 'Stepup', 'Lunge', 'Bridge', 
           'Hamstring Curl', 'Plank', 'Crunches', 'Side Plank', 'Ab Rotation']
@@ -71,4 +71,11 @@ def create_axis(cardio, resistance, month):
     else:
       y.append(i[1]) 
 
-  return x, y, exercises
+  # pie chart data
+  cardio_count = len(set([x.date for x in cardio])) 
+  resistance_count = len(set([x.date for x in resistance]))
+
+  cardio_percent = int((cardio_count / cardio_count + resistance_count) * 10)
+  resistance_percent = int((resistance_count / cardio_count + resistance_count) * 10)
+
+  return x, y, exercises, cardio_percent, resistance_percent
