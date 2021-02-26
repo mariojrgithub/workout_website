@@ -6,13 +6,13 @@
 
 {% block body %}
 
-<div class="container" style="text-align: center; max-height: 100vh;">
+<div class="container" style="text-align: center;">
 <br>
 <h3>{{ month_text }} Workouts</h3>
     
-<canvas id="myChart" ></canvas>
+<canvas style="min-height: 75%;" id="myChart" ></canvas>
 <br>
-<canvas style="padding-bottom: 2em;" id="myChart2" ></canvas>
+<canvas style="padding-bottom: 1em;" id="myChart2" ></canvas>
 
 </div>
 
@@ -88,7 +88,7 @@ var myPieChart = new Chart(ctx2, {
             data: [{{ resistance_percent }}, {{ cardio_percent }}],
             backgroundColor: ['Blue','Red']
         }],
-        labels: ['Resistance', 'Cardio']
+        labels: ['Resistance %', 'Cardio %']
     }
 });
 

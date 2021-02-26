@@ -75,7 +75,7 @@ def create_axis(cardio, resistance, month):
   cardio_count = len(set([x.date for x in cardio])) 
   resistance_count = len(set([x.date for x in resistance]))
 
-  cardio_percent = int((cardio_count / cardio_count + resistance_count) * 10)
-  resistance_percent = int((resistance_count / cardio_count + resistance_count) * 10)
+  cardio_percent = round((cardio_count / (cardio_count + resistance_count)) * 100)
+  resistance_percent = round((resistance_count / (cardio_count + resistance_count)) * 100)
 
   return x, y, exercises, cardio_percent, resistance_percent
