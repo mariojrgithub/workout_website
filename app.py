@@ -15,6 +15,7 @@ from add_workout import AddCardioForm, AddResistanceForm
 from login import LoginForm
 from edit_workout import EditCardioForm, EditResistanceForm
 from add_vitals import AddVitalsForm
+from add_measure import AddMeasureForm
 from config import *
 
 from charts import create_axis
@@ -47,6 +48,28 @@ class Users(db.Document, UserMixin):
     def to_json(self):
         return {"name": self.name,
                 "password": self.password}
+
+class Measures(db.Document, UserMixin):
+    user = db.StringField()
+    weight = db.StringField()
+    bodyfat = db.StringField()
+    resting_heart_rate = db.StringField()
+    goal1 = db.StringField()
+    goal2 =  db.StringField()                       
+    goal3 = db.StringField()
+    date = db.StringField()
+
+    def to_json(self):
+        return {
+            "user": self.user,
+            "weight": self.weight,
+            "bodyfat": self.bodyfat,
+            "resting_heart_rate": self.resting_heart_rate,
+            "goal1": self.goal1,
+            "goal2": self.goal2,
+            "goal3": self.goal3,
+            "date": self.date
+        }
 
 
 class Cardio(db.Document, UserMixin):
@@ -637,6 +660,32 @@ def charts():
     return render_template('charts.html', xy=xy, exercises=exercises, month_text=month_text, cardio_percent=cardio_percent, resistance_percent=resistance_percent, name=name)
 
 
+@app.route('/add-measurement', methods=['GET', 'POST'])
+@login_required
+def add_measure():
+    
+    name = current_user.name
+
+    form = AddMeasureForm()
+
+    if form.validate_on_submit():
+        measures = Measures(user=name,
+                        weight=form.weight.data,
+                        bodyfat=form.bodyfat.data,
+                        resting_heart_rate=form.resting_heart_rate.data,
+                        goal1=form.goal1.data,
+                        goal2=form.goal2.data,
+                        goal3=form.goal3.data,
+                        date=str(form.date.data)
+                        )
+
+        measures.save()
+
+        flash("Save was successfull!")
+
+        return redirect(url_for('index'))
+
+    return render_template('add_measure.html', form=form, name=name)
 
 
 @app.errorhandler(404)
